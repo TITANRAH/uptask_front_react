@@ -1,0 +1,123 @@
+//TODO: REACT INIT PROJECT
+
+- npm create vite@latest
+
+elegimos react 
+typescript - swc
+
+- npm install en la carpeta del proyecto
+
+entramos al proyecto
+
+- eliminamos enpublig el icono
+- eliminamos la carpeta assets
+- eliminamos App.css
+- eliminamos App.tsx
+- abrimos index.tsx eliminamos todo dentro
+- en main quitamos el App component y ponemos un h1
+- instalamos tailwind css postcss y autoprefixer:
+
+ npm install -D tailwindcss postcss autoprefixer
+
+- iniciamos tailwind :
+
+ npx tailwindcss init -p
+
+luego en index.css
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+luego en el campo content del archivo tailwind.config.js
+
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+
+en index.html
+ <body class="bg-gray-100">
+reiniciamos el sistema npm run dev
+
+instalar npm i react-router-dom
+
+crear archivo de router.tsx
+
+borrar App.tsx 
+
+reemplazar todo main.tsx con esto 
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <React.StrictMode>
+    <h1>Hello, world!</h1>
+  </React.StrictMode>
+);
+
+
+TODO: HEADLESS UI 
+
+EL COMPNENTE NAVMENU FUE REALIZADO CON ESTOS COMPONENTES DE HEADLESS UI
+
+npm i @headlessui/react
+
+npm i @heroicons/react
+
+TODO: REACT HOOOK form
+
+ npm i react-hook-form
+
+ 
+ npm i zod
+
+TODO: AXIOS
+
+npm i axios
+
+TODO: INSTALAR TOASTYFY
+
+npm i react-toastify
+
+TODO: INSTALAR TANSTACK QUERY
+
+npm i @tanstack/react-query
+
+TODO: REACT QUERY
+
+cuando usamos mutation lo que devuelve la funcion jhttp se toma en el onSuccess como parametro 
+
+cuando usamos USEQUERY hay que poner () => get.. en donde la funcion
+ 
+EXISTEN USEQUERY PARA OBTENER DATOS DE UNA API O UN SERVIDOR 
+
+USEMUTATION
+
+PARA CREAR ACTUALIZAR ELIMINAR POST PUT PATCH DELETE
+
+
+
+TODO: REACT QUERY DEVTOOLS
+
+npm i @tanstack/react-query-devtools
+
+APARECERA UN ICNO DE PLAYA
+
+LO PINCHO Y APARECEN LAS REACT QER DEVTOOLS 
+
+APARECERA EL ID DE LA PETICION SEGUN DONDE ABRA UNA PAGINA
+
+ID QUE SE LE DIO AL USAR MUTATION O QUERY
+
+CUANDO UNA PETICION ESTA EN AMARILLO EN STALE ES POR QUE ESTA EN CACHE
+
+POR LO TANTO AL IR A UNA PAGUNA Y A VOLVER A ESA PAGINA LOS DATOS ESTARAN AHI SIN HACER OTRA CONSULTA
+
+AL INSTALAR MORGAN EN EL BACKEND VEREMOS QUE NO HACE UYNA NUEVA CONSULTA 
+
+Y QUE LA RESPUESTA ES UN 304 DESDE EL BACKEND Y 304 SIGNIFICA NO MODIFICADO 
+
+
