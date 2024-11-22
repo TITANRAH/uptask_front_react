@@ -24,6 +24,21 @@ function TaskList(props: Props) {
     completed: [],
   };
 
+  const statusTranslations: {[key: string]: string} = {
+    pending: 'Pendiente',
+    onHold: 'En Espera',
+    inProgress: 'En Progreso',
+    underReview: 'En Revisión',
+    completed: 'Completado',
+  }
+  const statusColors: {[key: string]: string} = {
+    pending: 'border-orange-300',
+    onHold: 'border-yellow-300',
+    inProgress: 'border-blue-300',
+    underReview: 'border-cyan-300',
+    completed: 'border-green-300',
+  }
+
   // este código agrupa las tareas por su estado, creando un objeto donde cada clave es un estado y cada valor es un array de tareas que tienen ese estado.
   //TODO: REDUCE 1
   //    definimos que las tareas usaran reduce que sera de tipo string y un array de tareas
@@ -206,7 +221,9 @@ function TaskList(props: Props) {
 
       <div className="flex gap-5 overflow-x-scroll 2xl:overflow-auto pb-32">
         {Object.entries(groupedTasks).map(([status, tasks]) => (
-          <div key={status} className="min-w-[300px] 2xl:min-w-0 2xl:w-1/5">
+          <div  key={status} className="min-w-[300px] 2xl:min-w-0 2xl:w-1/5">
+
+            <h3 className={`capitalize text-xl font-light border ${statusColors[status]} bg-white p-3 border-t-8`}>{statusTranslations[status]} </h3>
             <ul className="mt-5 space-y-5">
               {tasks.length === 0 ? (
                 <li className="text-gray-500 text-center pt-3">

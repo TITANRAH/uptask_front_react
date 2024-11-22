@@ -4,11 +4,12 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TaskForm from "./TaskForm";
 import { useForm } from "react-hook-form";
 import { TaskFormData } from "@/types/index";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTask } from "@/api/TaskApi";
 import { toast } from "react-toastify";
 
 export default function AddTaskModal() {
+  const queryClient = useQueryClient();
   const params = useParams();
 
   const projectId = params.projectId!;
@@ -19,9 +20,10 @@ export default function AddTaskModal() {
       toast.error(error.message);
     },
     onSuccess: (data) => {
-      toast.success(data);    
-      reset()
-      navigate(location.pathname, { replace: true })
+      toast.success(data);
+      reset();
+      navigate(location.pathname, { replace: true });
+      queryClient.invalidateQueries({ queryKey: ["editProject", projectId] });
     },
   });
 
@@ -53,16 +55,13 @@ export default function AddTaskModal() {
   } = useForm({ defaultValues: initialValues });
 
   const handleCreateTask = async (formData: TaskFormData) => {
-
-    // las mutaciones solo aceptan una variable por eso pasamos asi 
+    // las mutaciones solo aceptan una variable por eso pasamos asi
     // aedmas en la funcion dijimos que asi aceptaria un solo parametro
     const data = {
       formData,
       projectId,
     };
     mutate(data);
-
-
   };
 
   return (
