@@ -1,12 +1,13 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TaskForm from "./TaskForm";
 import { useForm } from "react-hook-form";
 import { TaskFormData } from "@/types/index";
 import {useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTask } from "@/api/TaskApi";
 import { toast } from "react-toastify";
+import { useQueryParams } from "@/utils/index";
 
 export default function AddTaskModal() {
   const queryClient = useQueryClient();
@@ -29,17 +30,22 @@ export default function AddTaskModal() {
 
   const navigate = useNavigate();
   //TODO: PARAMETROS DE LA URL
-  const location = useLocation();
+  // const location = useLocation();
 
-  // LUEGO CON URLsearchparams buscamos los query strings
-  const queryParams = new URLSearchParams(location.search);
+  // // LUEGO CON URLsearchparams buscamos los query strings
+  // const queryParams = new URLSearchParams(location.search);
 
-  //QUEREMOS SABER SI EXITE NEWTASK
-  const modalTask = queryParams.get("newTask");
+  // //QUEREMOS SABER SI EXITE NEWTASK
+  // const modalTask = queryParams.get("newTask");
 
   // COMO PUEDE SER QUE SE BORRE EL QUERY PARAMS DE LA URL Y DE NULL
-  // DECIMOS SI EXISTE SHOW ES TRUE SI NO ES FALSE Y
+  // DECIMOS SI EXISTE modaltask y modal task es el query params newtask SHOW ES TRUE SI NO ES FALSE Y
   // ESTE SHOW LO PASAMNOS AL COMPONENTE PARA MOSTRAR O NO EL MODAL
+  
+  const modalTask = useQueryParams("newTask");
+
+  console.log('modalTask :>> ', modalTask);
+  
   const show = modalTask ? true : false;
 
   const initialValues: TaskFormData = {
@@ -124,6 +130,7 @@ export default function AddTaskModal() {
           </div>
         </Dialog>
       </Transition>
+
     </>
   );
 }

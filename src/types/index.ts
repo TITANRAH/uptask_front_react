@@ -11,6 +11,8 @@ export const taskStatusSchema = z.enum([
   "completed",
 ]);
 
+export type TaskStatus = z.infer<typeof taskStatusSchema>;
+
 // CREAMOS EL ESQUEMA A USAR EN EL ORMGULARIO DE CREACION DE TAREAS
 export const tasksSchema = z.object({
   _id: z.string(),
@@ -19,6 +21,8 @@ export const tasksSchema = z.object({
   project: z.string(),
   // aqui le pasamos el taskstatus
   status: taskStatusSchema,
+  createdAt: z.string(),
+  updatedAt: z.string()
 });
 
 export type Task = z.infer<typeof tasksSchema>;

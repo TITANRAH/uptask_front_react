@@ -1,5 +1,8 @@
 import { Task } from "@/types/index";
 import TaskCard from "./TaskCard";
+import { statusTranslations } from "@/locales/es";
+
+
 
 interface Props {
   tasks: Task[];
@@ -24,13 +27,7 @@ function TaskList(props: Props) {
     completed: [],
   };
 
-  const statusTranslations: {[key: string]: string} = {
-    pending: 'Pendiente',
-    onHold: 'En Espera',
-    inProgress: 'En Progreso',
-    underReview: 'En Revisión',
-    completed: 'Completado',
-  }
+  
   const statusColors: {[key: string]: string} = {
     pending: 'border-orange-300',
     onHold: 'border-yellow-300',

@@ -1,7 +1,11 @@
+import { deleteTask } from "@/api/TaskApi";
 import { Task } from "@/types/index";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Fragment } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface Props {
   task: Task;
@@ -9,8 +13,37 @@ interface Props {
 function TaskCard(props: Props) {
   const { task } = props;
 
+  const navigate = useNavigate();
+  //TODO PARAMS SON SIN ? LOS QUE LLEVEN ? SON QUERY PARAMS
+  const params = useParams();
+  const projectId = params.projectId!;
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: deleteTask,
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      toast.success(data);
+      queryClient.invalidateQueries({ queryKey: ["editProject", projectId] });
+    },
+  });
+
+  const handleDeleteTask = async () => {
+    const data = {
+      projectId,
+      taskId: task._id,
+    };
+
+    mutate(data);
+  };
+
   return (
-    <li draggable className="p-5 bg-white border border-slate-300 flex justify-between gap-3">
+    <li
+      draggable
+      className="p-5 bg-white border border-slate-300 flex justify-between gap-3"
+    >
       <div className="min-w-0 flex flex-col gap-y-4">
         <button className="text-xl font-bold text-slate-600 text-left">
           {task.name}
@@ -38,6 +71,9 @@ function TaskCard(props: Props) {
               <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                 <Menu.Item>
                   <button
+                   onClick={() =>
+                    navigate(location.pathname + `?viewTask=${task._id}`)
+                  }
                     type="button"
                     className="block px-3 py-1 text-sm leading-6 text-gray-900"
                   >
@@ -46,6 +82,9 @@ function TaskCard(props: Props) {
                 </Menu.Item>
                 <Menu.Item>
                   <button
+                    onClick={() =>
+                      navigate(location.pathname + `?editTask=${task._id}`)
+                    }
                     type="button"
                     className="block px-3 py-1 text-sm leading-6 text-gray-900"
                   >
@@ -56,6 +95,7 @@ function TaskCard(props: Props) {
                 <Menu.Item>
                   <button
                     type="button"
+                    onClick={() => handleDeleteTask()}
                     className="block px-3 py-1 text-sm leading-6 text-red-500"
                   >
                     Eliminar Tarea
