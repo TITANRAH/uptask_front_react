@@ -1,5 +1,27 @@
 import { z } from "zod";
 
+
+//AUTH
+
+export const authSchema = z.object({
+  name: z.string(),
+  email: z.string().email(),
+  password: z.string(),
+  password_confirmation: z.string(),
+  token: z.string()
+});
+
+export type Auth = z.infer<typeof authSchema>;
+
+export type UserLoginForm = Pick<Auth, "email" | "password">;
+export type UserRegistrationForm = Pick<Auth, "name" | "email" | "password" | "password_confirmation">;
+export type RequestConfirmationCodeForm = Pick<Auth, "email" >;
+// NOS VALEMOS DE USAR PICK PARA AGREGAR TOKEN A AUTHSCHEMA Y PODER USAR OTRA VALIDACION 
+export type ConfirmToken = Pick<Auth, "token">;
+
+
+
+
 // TASKS
 
 // definimos los status de las tareas que iran ene l schema
