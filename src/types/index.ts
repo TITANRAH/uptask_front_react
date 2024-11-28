@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-
 //AUTH
 
 export const authSchema = z.object({
@@ -8,20 +7,35 @@ export const authSchema = z.object({
   email: z.string().email(),
   password: z.string(),
   password_confirmation: z.string(),
-  token: z.string()
+  token: z.string(),
 });
 
 export type Auth = z.infer<typeof authSchema>;
 
 export type UserLoginForm = Pick<Auth, "email" | "password">;
-export type UserRegistrationForm = Pick<Auth, "name" | "email" | "password" | "password_confirmation">;
-export type RequestConfirmationCodeForm = Pick<Auth, "email" >;
-// NOS VALEMOS DE USAR PICK PARA AGREGAR TOKEN A AUTHSCHEMA Y PODER USAR OTRA VALIDACION 
+export type UserRegistrationForm = Pick<
+  Auth,
+  "name" | "email" | "password" | "password_confirmation"
+>;
+export type RequestConfirmationCodeForm = Pick<Auth, "email">;
+// NOS VALEMOS DE USAR PICK PARA AGREGAR TOKEN A AUTHSCHEMA Y PODER USAR OTRA VALIDACION
 export type ConfirmToken = Pick<Auth, "token">;
+export type ForgotPasswordForm = Pick<Auth, "email">;
+export type NewPasswordForm = Pick<Auth, "password" | "password_confirmation">;
 
+// USERS
 
+// TOMAMOS DOS DE AUTSCHEMA Y AGREGAMOS _ID
+export const userSchema = authSchema
+  .pick({
+    name: true,
+    email: true,
+  })
+  .extend({
+    _id: z.string(),
+  });
 
-
+export type User = z.infer<typeof userSchema>;
 // TASKS
 
 // definimos los status de las tareas que iran ene l schema
@@ -44,7 +58,7 @@ export const tasksSchema = z.object({
   // aqui le pasamos el taskstatus
   status: taskStatusSchema,
   createdAt: z.string(),
-  updatedAt: z.string()
+  updatedAt: z.string(),
 });
 
 export type Task = z.infer<typeof tasksSchema>;

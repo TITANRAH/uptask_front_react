@@ -1,26 +1,35 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { NavMenu } from "@/components/NavMenu";
 // TODO: TOASTIFY
-import { ToastContainer } from "react-toastify";
+import {  ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "@/hooks/useAuth";
 
 // TODO: REACT ROUTER DOM 2 AQUI LLAMAMOS A OUTLET PARA RENDERIZAR LOS COMPONENTES HIJOS
 
 function AppLayout() {
-  return (
+  const { data, isError, isLoading } = useAuth();
+
+  if (isLoading) return "Cargando...";
+  if (isError) {
+    return <Navigate to="/auth/login" />;
+  }
+  
+  // TODO: USANDO REACT QUERY 
+
+  // SIEMPRE DEBEMOS VALIDAR SI HAY DATA PARA RENDERIZAR EL COMPONENTE
+  if(data) return (
     <>
       <header className="bg-gray-800 py-5">
         <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center">
           <div className="w-64">
-
             <Link to="/">
               <Logo />
             </Link>
-          
           </div>
 
-          <NavMenu/>
+          <NavMenu name={data.name} />
         </div>
       </header>
 
@@ -45,7 +54,6 @@ function AppLayout() {
         // rtl={false}
         pauseOnFocusLoss={false}
         draggable
-       
       />
     </>
   );

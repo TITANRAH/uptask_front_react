@@ -48,9 +48,8 @@ export async function getProjectById(id: Project["_id"]) {
   try {
     const { data } = await api(`/projects/${id}`);
     console.log("data get prject by id ->", data);
-    
+
     return data;
-   
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);
@@ -63,23 +62,19 @@ interface UpdateProject {
   projectId: Project["_id"];
 }
 
-export async function updateProject({formData, projectId}: UpdateProject) {
-  
+export async function updateProject({ formData, projectId }: UpdateProject) {
   console.log("formData ->", formData);
   console.log("projectId ->", projectId);
-  
-  
+
   // TODO: AXIOS 3
 
   // LLAMAMOS A LA CREACION DEAXIOS QQUE YA CONTENE LA URL BASE Y LE PONEMOS EL ENDPOINT SOLAMENTE
   try {
-
     // TODO: ZOD SOLO RECOMENDABLE PARA PETICIONES TIPO GET
     const { data } = await api.put<string>(`/projects/${projectId}`, formData);
     console.log("data get prject by id ->", data);
-    
+
     return data;
-   
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);
@@ -87,20 +82,18 @@ export async function updateProject({formData, projectId}: UpdateProject) {
   }
 }
 
-
 export async function deleteProject(id: Project["_id"]) {
   // TODO: AXIOS 3
 
   // LLAMAMOS A LA CREACION DEAXIOS QQUE YA CONTENE LA URL BASE Y LE PONEMOS EL ENDPOINT SOLAMENTE
   try {
-    //TODO: PUEDO IR AL BACKEND A VER QUE DEVUELVE EN ESTE CASO ES UN STRING 
+    //TODO: PUEDO IR AL BACKEND A VER QUE DEVUELVE EN ESTE CASO ES UN STRING
     // POR ESO TIPO DE DATO STRING
     // AUNQUE PODRIA TIPAR LOS GET CON ZOD O UNA INTERFACE
     const { data } = await api.delete<string>(`/projects/${id}`);
     console.log("data get prject by id ->", data);
-    
+
     return data;
-   
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);

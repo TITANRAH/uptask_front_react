@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
 import { UserLoginForm } from "@/types/index";
 import ErrorMessage from "@/components/ErrorMessage";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { authenticateUser } from "@/api/AuthApi";
 import { toast } from "react-toastify";
+import TitleForm from "@/components/TitleForm";
 
 export default function LoginView() {
+  const navigate = useNavigate();
   const initialValues: UserLoginForm = {
     email: "",
     password: "",
@@ -14,6 +16,7 @@ export default function LoginView() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({ defaultValues: initialValues });
 
@@ -22,8 +25,10 @@ export default function LoginView() {
     onError: (error) => {
       toast.error(error.message);
     },
-    onSuccess: (data) => {
-      toast.success(data);
+    onSuccess: () => {
+      
+      navigate('/')
+      reset()
     },
   });
 
@@ -33,6 +38,12 @@ export default function LoginView() {
 
   return (
     <>
+      <TitleForm
+        titleH1="Iniciar Sesión"
+        titleP="Comienza a planear proyectos"
+        titleSpan="iniciando sesión en este formulario"
+      />
+
       <form
         onSubmit={handleSubmit(handleLogin)}
         className="space-y-8 p-10 bg-white"
@@ -82,6 +93,9 @@ export default function LoginView() {
 
       <nav className="mt-10 flex flex-col space-y-4 justify-center text-white items-center">
         <Link to={"/auth/register"}>¿No tienes una cuenta?, Crear una</Link>
+        <Link to={"/auth/forgot-password"}>
+          ¿Olvidaste tu contraseña? Restablecer
+        </Link>
       </nav>
     </>
   );

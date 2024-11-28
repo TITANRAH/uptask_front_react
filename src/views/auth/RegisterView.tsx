@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { createAccount } from "@/api/AuthApi";
 import { toast } from "react-toastify";
+import TitleForm from "@/components/TitleForm";
 
 export default function RegisterView() {
   const initialValues: UserRegistrationForm = {
@@ -44,11 +45,13 @@ export default function RegisterView() {
 
   return (
     <>
-      <h1 className="text-5xl font-black text-white">Crear Cuenta</h1>
-      <p className="text-2xl font-light text-white mt-5">
-        Llena el formulario para {""}
-        <span className=" text-fuchsia-500 font-bold"> crear tu cuenta</span>
-      </p>
+     
+
+      <TitleForm 
+        titleH1="Crear Cuenta"
+        titleP="Llena el formulario para"
+        titleSpan="crear tu cuenta"
+      />
 
       <form
         onSubmit={handleSubmit(handleRegister)}
@@ -137,6 +140,9 @@ export default function RegisterView() {
 
       <nav className="mt-10 flex flex-col space-y-4 justify-center text-white items-center">
         <Link to={"/auth/login"}>¿Ya tienes cuenta?, Inicia Sesión</Link>
+        <Link to={"/auth/forgot-password"}>
+          ¿Olvidaste tu contraseña? Restablecer
+        </Link>
       </nav>
     </>
   );
