@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import {
+  CheckPasswordForm,
   ConfirmToken,
   ForgotPasswordForm,
   NewPasswordForm,
@@ -141,19 +142,32 @@ export async function getUser() {
 
     console.log(data);
 
-    // TODO: VALIDACION ZOD DE USER 
+    // TODO: VALIDACION ZOD DE USER
 
-    // hacemos el llamado 
-    // edclaraos la variable response 
-    // importamos usersChema y pasamos con safeparse para que valide la data 
+    // hacemos el llamado
+    // edclaraos la variable response
+    // importamos usersChema y pasamos con safeparse para que valide la data
     // devolvemos response.data si response.success
     const response = userSchema.safeParse(data);
 
     if (response.success) {
       return response.data;
     }
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.error);
+    }
+  }
+}
 
-   
+export async function checkUserPassword(formData: CheckPasswordForm) {
+  try {
+    const url = "/auth/check-password";
+    const { data } = await api.post<string>(url, formData);
+
+    console.log("data", data);
+
+    return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);

@@ -1,4 +1,5 @@
 import { useLocation } from "react-router-dom";
+import { Project, TeamMember } from "../types";
 
 export function useQueryParams(paramGet: string) {
   const location = useLocation();
@@ -24,4 +25,8 @@ export function formateDate(isoString: string): string {
   });
 
   return formatter.format(date);
+}
+
+export const isManager = (managerId: Project['manager'], userId: TeamMember['_id'] ) => {
+  return managerId === userId;
 }

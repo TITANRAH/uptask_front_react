@@ -7,6 +7,7 @@ import { getTaskById, updateStatus } from "@/api/TaskApi";
 import { toast } from "react-toastify";
 import { statusTranslations } from "@/locales/es";
 import { TaskStatus } from "@/types/index";
+import NotesPanel from "../notes/NotesPanel";
 
 export default function TaskModalDetails() {
   const params = useParams();
@@ -50,7 +51,7 @@ export default function TaskModalDetails() {
     console.log(e.target.value);
 
     // TODO:// CREAR UN TYPE NUEVO PARA EL STATUS
-    const status = e.target.value  as TaskStatus;
+    const status = e.target.value as TaskStatus;
     const data = {
       projectId,
       taskId,
@@ -58,7 +59,6 @@ export default function TaskModalDetails() {
     };
 
     console.log(data);
-    
 
     mutate(data);
   };
@@ -119,12 +119,33 @@ export default function TaskModalDetails() {
                     <p className="text-lg text-slate-500 mb-2">
                       Descripción: {data.description}
                     </p>
+
+                    {data.completedBy.length > 0 ? (
+                      <>
+                        <p className="text-1xl underline font-bold uppercase text-slate-500 mb-2">
+                          Historial de cambios
+                        </p>
+
+                        <ul className="list-decimal">
+                          {data.completedBy.map((activityLog) => (
+                            <li key={activityLog._id}>
+                              <span className="font-bold mr-2 text-slate-600">
+                                {statusTranslations[activityLog.status]}
+                              </span>
+                              por: {activityLog.user.name.toUpperCase()}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    ) : null}
+
                     <div className="my-5 space-y-3">
                       <label className="font-bold">
                         Estado Actual: {data.status}
                       </label>
 
-                      <select className="w-full p-3 bg-white border border-gray-300"
+                      <select
+                        className="w-full p-3 bg-white border border-gray-300"
                         onChange={handleChangeStatus}
                         defaultValue={data.status}
                       >
@@ -134,20 +155,16 @@ export default function TaskModalDetails() {
                           // el key se nevia al servidor como el valor seleccionado pero el value del objeto es que el ve el usuario
                           Object.entries(statusTranslations).map(
                             ([key, value]) => (
-                              <option
-                                value={key}
-                                key={key}
-                               
-                                
-                              >
+                              <option value={key} key={key}>
                                 {value}
-                                
                               </option>
                             )
                           )
                         }
                       </select>
                     </div>
+
+                    <NotesPanel notes={data.notes}/>
                   </Dialog.Panel>
                 </Transition.Child>
               </div>

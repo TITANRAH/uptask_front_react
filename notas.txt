@@ -127,3 +127,10 @@ npm i @chakra-ui/pin-input
 
 TODO: INTERCEPTORS EN REACT DE AXIOS
 
+TODO: TAILWIND FORMS
+
+npm i @tailwindcss/forms
+
+TODO: DRAGABLE
+
+npm install @dnd-kit/core

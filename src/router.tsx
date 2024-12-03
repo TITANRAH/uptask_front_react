@@ -11,6 +11,11 @@ import ConfirmAccountView from "./views/auth/ConfirmAccountView";
 import RequestNewCodeView from "./views/auth/RequestNewCodeView";
 import ForgotPasswordView from "./views/auth/ForgotPasswordView";
 import NewPassword from "./views/auth/NewPassword";
+import ProjectTeamView from "./views/projects/ProjectTeamView";
+import ProfileView from "./views/profile/ProfileView";
+import ChangePasswordView from "./views/profile/ChangePasswordView";
+import ProfileLayout from "./layouts/ProfileLayout";
+import NotFound from "./views/404/NotFound";
 
 // TODO: RUTAS REACT
 export default function Router() {
@@ -30,17 +35,23 @@ export default function Router() {
           //TODO: CREAR OTRA RUTA
           {/* USO LINK DE REACT DOM ROUTER PARA REDIRECCIONAR A LA RUTA /project/create
             PERO DEBO DECLÑARARLA ACA Y AL COMPPONENTE QUYE LLEVARA */}
-          <Route path="/project/create" element={<CreateProjectView />} index />
-          <Route
-            path="/project/:projectId"
-            element={<ProjectDetailsView />}
-            index
-          />
+          <Route path="/project/create" element={<CreateProjectView />} />
+          <Route path="/project/:projectId" element={<ProjectDetailsView />} />
           <Route
             path="/project/:projectId/edit"
             element={<EditProjectView />}
-            index
           />
+          <Route
+            path="/project/:projectId/team"
+            element={<ProjectTeamView />}
+          />
+          <Route element={<ProfileLayout />}>
+            <Route path="/profile" element={<ProfileView />} />
+            <Route
+              path="/profile/password"
+              element={<ChangePasswordView />}
+            />
+          </Route>
         </Route>
 
         {/* segundo layout */}
@@ -52,8 +63,17 @@ export default function Router() {
             element={<ConfirmAccountView />}
           />
           <Route path="/auth/request-code" element={<RequestNewCodeView />} />
-          <Route path="/auth/forgot-password" element={<ForgotPasswordView />} />
+          <Route
+            path="/auth/forgot-password"
+            element={<ForgotPasswordView />}
+          />
           <Route path="/auth/new-password" element={<NewPassword />} />
+        </Route>
+
+            {/* TODO: 404 */}
+            {/* SI NO SE CUMPLE NINGUNA DE LAS VISTAS ANTERIORES DEFINIDAS CAERA EN EL ASTERISCO */}
+        <Route element={<AuthLayout />}>
+            <Route path="*" element={<NotFound />} index />
         </Route>
       </Routes>
     </BrowserRouter>

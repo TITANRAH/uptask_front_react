@@ -2,7 +2,6 @@ import api from "@/lib/axios";
 import { isAxiosError } from "axios";
 import { TaskFormData, Project, Task, tasksSchema } from "@/types/index";
 
-
 // TODO: USANDO PICK
 // podemos agregar mas tipos altask principal sin afecftar a los demas endpoint
 type TaskApi = {
@@ -40,14 +39,15 @@ export async function getTaskById({
   try {
     const url = `/projects/${projectId}/tasks/${taskId}`;
     const { data } = await api(url);
+
     // TODO: VALIDACIONES CON ZOD EN UNA PETICION HTTP
     // asi validamos con el schema de zod
     const response = tasksSchema.safeParse(data);
 
     if (response.success) {
+      console.log("respomse desde getTaskById->", response.data);
       return response.data;
     }
-    console.log("respomse desde getTaskById->", response);
   } catch (error) {
     if (isAxiosError(error) && error.response) {
       throw new Error(error.response.data.error);
@@ -95,14 +95,14 @@ export async function deleteTask({
 export async function updateStatus({
   projectId,
   taskId,
-  status
+  status,
 }: Pick<TaskApi, "projectId" | "taskId" | "status">) {
   console.log("projectId :>> ", projectId);
   console.log("taskId :>> ", taskId);
 
   try {
     const url = `/projects/${projectId}/tasks/${taskId}/status`;
-    const { data } = await api.post<string>(url, {status});
+    const { data } = await api.post<string>(url, { status });
 
     return data;
   } catch (error) {
