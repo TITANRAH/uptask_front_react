@@ -13,7 +13,7 @@ export function useQueryParams(paramGet: string) {
 }
 
 // TODO: FECHAS FORMATEADOR DE ISOSTRING
-// tomara una fecha iso string y dvolvera un string
+// tomara una fecha iso string y devolvera un string
 
 export function formateDate(isoString: string): string {
   const date = new Date(isoString);
