@@ -72,7 +72,7 @@ export default function Router() {
 
             {/* TODO: 404 */}
             {/* SI NO SE CUMPLE NINGUNA DE LAS VISTAS ANTERIORES DEFINIDAS CAERA EN EL ASTERISCO */}
-        <Route element={<AuthLayout />}>
+        <Route element={<AuthLayout  />}>
             <Route path="*" element={<NotFound />} index />
         </Route>
       </Routes>
