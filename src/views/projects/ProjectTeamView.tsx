@@ -4,7 +4,7 @@ import { TeamMember } from "@/types/index";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/16/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { Fragment } from "react";
+import  { Fragment } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 

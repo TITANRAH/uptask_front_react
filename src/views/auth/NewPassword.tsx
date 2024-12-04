@@ -2,7 +2,7 @@ import NewPasswordForm from '@/components/auth/NewPasswordForm'
 import NewPasswordToken from '@/components/auth/NewPasswordToken'
 import TitleForm from '@/components/TitleForm'
 import { ConfirmToken } from '@/types/index'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 
 // TODO: FORGOT PASSWORD 2
 
